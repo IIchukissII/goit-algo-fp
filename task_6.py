@@ -18,18 +18,15 @@ def greedy_menu(items: list[Item], budget: int) -> int:
 
 
 def dynamic_programming_max_calories(items: list[Item], budget: int) -> dict[str, int]:
-    # Initialize dynamic programming tables
     max_calories = [0] * (budget + 1)
     last_item = [None] * (budget + 1)
 
-    # Fill the dynamic programming tables
     for current_budget in range(1, budget + 1):
         for item in items:
             if current_budget >= item.cost and max_calories[current_budget - item.cost] + item.calories > max_calories[current_budget]:
                 max_calories[current_budget] = max_calories[current_budget - item.cost] + item.calories
                 last_item[current_budget] = item
 
-    # Reconstruct the optimal set of dishes
     selected_dishes = {}
     current_budget = budget
     while last_item[current_budget] is not None:
