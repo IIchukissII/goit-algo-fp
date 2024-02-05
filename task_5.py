@@ -65,7 +65,7 @@ class BinaryTreeNode:
 
     def _draw_tree(self, G, x, y, level, dx):
         if self is not None:
-            G.add_node(self, pos=(x, y), color=self.color)
+            G.add_node(self, pos=(x, y), color=self.color)  # Include color attribute
             if self.left is not None:
                 G.add_edge(self, self.left)
                 x_left = x - dx / level
@@ -128,6 +128,7 @@ class HeapTree:
 
     def change_min_heap(self, min_flag):
         self.min_heap = min_flag
+        self.heap_sort()
 
     def heapify(self):
         heapq.heapify(self.heap)
@@ -168,7 +169,7 @@ class HeapTree:
         if self.node is not None:
             G = nx.Graph()
             G.name = title
-            pos_data = self.node._draw_tree(G, 0, 0, 1, 0.5) 
+            pos_data = self.node._draw_tree(G, 0, 0, 1, 0.5)  # Pass dx as 0.5
 
             pos = {node: data["pos"] for node, data in pos_data.items()}
             node_colors = [data["color"] for _, data in pos_data.items()]
@@ -184,7 +185,7 @@ class HeapTree:
                 node_color=node_colors,
                 font_weight="bold",
             )
-            plt.suptitle(title, x=0.1, y=0.9) 
+            plt.suptitle(title, x=0.1, y=0.9)  # Set the y parameter to adjust the position of the title
             plt.show()
 
     def dfs_iterative(self, base_color=(0.06, 1.00, 0.70), lightening_factor=0.8):
@@ -204,7 +205,6 @@ def main():
     tree.draw_tree("BFS")
 
     tree.change_min_heap(True)
-    tree.heap_sort()
     tree.dfs_iterative()
     tree.draw_tree("DFS max heap")
 
