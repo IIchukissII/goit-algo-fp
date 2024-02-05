@@ -2,7 +2,7 @@ import heapq
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
-
+from tabulate import tabulate
 
 def dijkstra(graph, start):
     distances = {vertex: float('infinity') for vertex in graph}
@@ -32,8 +32,8 @@ def print_shortest_paths_table(graph):
     df = pd.DataFrame(table_data)
     df.index = vertices
 
-    print("Таблиця найкоротших шляхів:")
-    print(df)
+    print("Table of shortest paths:")
+    print(tabulate(df, headers='keys', tablefmt='fancy_grid'))
 
     return df
 
