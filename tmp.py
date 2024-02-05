@@ -23,23 +23,34 @@ class BinaryTreeNode:
     def __hash__(self):
         return hash(self.id)
 
+
+    def remove_all_children(self):
+        if self.left:
+            self.left.remove_all_children()
+            self.left = None
+        if self.right:
+            self.right.remove_all_children()
+            self.right = None
+
     def _insert_from_heap(self, heap, index=0):
+        if index == 0:
+            self.remove_all_children()
         if not heap:
             return None
 
-        self.key = heap[index]
+        self.key = heap[index].key
 
         left_index = 2 * index + 1
         right_index = 2 * index + 2
 
         if left_index < len(heap):
             if not self.left:
-                self.left = BinaryTreeNode(heap[left_index])
+                self.left = heap[left_index]
             self.left._insert_from_heap(heap, left_index)
 
         if right_index < len(heap):
             if not self.right:
-                self.right = BinaryTreeNode(heap[right_index])
+                self.right = heap[right_index]
             self.right._insert_from_heap(heap, right_index)
 
         return self
@@ -66,7 +77,10 @@ class BinaryTreeNode:
                 x_right = x + dx / level
                 y_right = y - 1
                 self.right._draw_tree(G, x_right, y_right, level * 2, dx)
-        return {n: {'pos': data['pos'], 'color': data['color']} for n, data in G.nodes(data=True)}
+        return {
+            n: {"pos": data["pos"], "color": data["color"]}
+            for n, data in G.nodes(data=True)
+        }
 
     def _dfs_iterative(self, base_color=(0.06, 1.00, 0.70), lightening_factor=0.8):
         stack = [self.find_node(self.id)]
@@ -76,7 +90,7 @@ class BinaryTreeNode:
             current_node = stack.pop()
             if current_node not in visited:
                 current_node.color = base_color
-                base_color = tuple(c ** lightening_factor for c in base_color)
+                base_color = tuple(c**lightening_factor for c in base_color)
                 visited.add(current_node)
 
                 if current_node.right:
@@ -93,7 +107,7 @@ class BinaryTreeNode:
             node = queue.popleft()
             if node not in visited:
                 node.color = base_color
-                base_color = tuple(c ** lightening_factor for c in base_color)
+                base_color = tuple(c**lightening_factor for c in base_color)
                 visited.add(node)
 
                 if node.left:
@@ -116,7 +130,9 @@ class HeapTree:
         heapq.heapify(self.heap)
 
     def heappop(self):
-        return heapq.heappop(self.heap)
+        pop_node = heapq.heappop(self.heap)
+        self.insert_from_heap()
+        return pop_node
 
     def heappush(self, node):
         heapq.heappush(self.heap, (node.key, node))
@@ -124,7 +140,8 @@ class HeapTree:
     def insert_from_heap(self, heap=None, index=0):
         if not self.heap:
             heapq.heapify(heap)
-            self.heap = heap
+            self.heap = [BinaryTreeNode(el) for el in heap]
+            heap = self.heap
         else:
             heapq.heapify(self.heap)
             heap = self.heap
@@ -135,12 +152,20 @@ class HeapTree:
             G = nx.Graph()
             pos_data = self.node._draw_tree(G, 0, 0, 1, 0.5)  # Pass dx as 0.5
 
-            pos = {node: data['pos'] for node, data in pos_data.items()}
-            node_colors = [data['color'] for _, data in pos_data.items()]
+            pos = {node: data["pos"] for node, data in pos_data.items()}
+            node_colors = [data["color"] for _, data in pos_data.items()]
             labels = {node: str(node.key) for node in G.nodes}
 
-            nx.draw(G, pos, labels=labels, with_labels=True, font_size=8,
-                    node_size=2500, node_color=node_colors, font_weight='bold')
+            nx.draw(
+                G,
+                pos,
+                labels=labels,
+                with_labels=True,
+                font_size=8,
+                node_size=2500,
+                node_color=node_colors,
+                font_weight="bold",
+            )
             plt.title(title)
             plt.show()
 
@@ -150,6 +175,13 @@ class HeapTree:
     def bfs_iterative(self, base_color=(0.06, 1.00, 0.70), lightening_factor=0.8):
         return self.node._bfs_iterative(base_color, lightening_factor)
 
+    def __str__(self):
+        node_dict = {}
+        if self.heap:
+            for node in self.heap:
+                node_dict[node.id] = node.key
+        return [node_dict[node.id] for node in self.heap]
+
 
 def main():
     # Create a binary tree from an unsorted list
@@ -158,15 +190,16 @@ def main():
     tree.insert_from_heap(unsorted_list)
 
     # Visualize the original tree
-    tree.dfs_iterative()
-    tree.draw_tree("Original Tree")
 
     tree.bfs_iterative()
     tree.draw_tree("Original Tree")
 
     print(tree.heappop())
-    tree.insert_from_heap()
     tree.draw_tree("Original Tree")
+
+    tree.dfs_iterative()
+    tree.draw_tree("Original Tree")
+
 
 if __name__ == "__main__":
     main()
