@@ -23,7 +23,6 @@ class BinaryTreeNode:
     def __hash__(self):
         return hash(self.id)
 
-
     def remove_all_children(self):
         if self.left:
             self.left.remove_all_children()
@@ -175,13 +174,6 @@ class HeapTree:
     def bfs_iterative(self, base_color=(0.06, 1.00, 0.70), lightening_factor=0.8):
         return self.node._bfs_iterative(base_color, lightening_factor)
 
-    def __str__(self):
-        node_dict = {}
-        if self.heap:
-            for node in self.heap:
-                node_dict[node.id] = node.key
-        return [node_dict[node.id] for node in self.heap]
-
 
 def main():
     # Create a binary tree from an unsorted list
@@ -194,7 +186,8 @@ def main():
     tree.bfs_iterative()
     tree.draw_tree("Original Tree")
 
-    print(tree.heappop())
+    node_pop =tree.heappop()
+    print(node_pop.key)
     tree.draw_tree("Original Tree")
 
     tree.dfs_iterative()
