@@ -59,7 +59,7 @@ graph = {
 |     2 |        0.0276 |
 |     3 |        0.0555 |
 |     4 |        0.0837 |
-|     5 |        0.1111 |                       ![task_7](https://github.com/IIchukissII/goit-algo-fp/assets/133657307/5917f320-f892-4399-87fc-c3448a8304be)
+|     5 |        0.1111 |                       
 |     6 |        0.1392 |
 |     7 |        0.1662 |
 |     8 |        0.1389 |
@@ -67,4 +67,6 @@ graph = {
 |    10 |        0.0830 |
 |    11 |        0.0555 |
 |    12 |        0.0278 |
+
+![task_7](https://github.com/IIchukissII/goit-algo-fp/assets/133657307/5917f320-f892-4399-87fc-c3448a8304be)
 
