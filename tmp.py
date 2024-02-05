@@ -128,21 +128,33 @@ class HeapTree:
     def heapify(self):
         heapq.heapify(self.heap)
 
+    def heap_sort(self, descending=False):
+        sign = -1 if descending else 1
+        for el in self.heap:
+            el.key = sign * el.key
+        self.heapify()
+        for el in self.heap:
+            el.key = sign * el.key
+        self.insert_from_heap(descending=descending)
+
     def heappop(self):
         pop_node = heapq.heappop(self.heap)
         self.insert_from_heap()
         return pop_node
 
-    def heappush(self, node):
-        heapq.heappush(self.heap, (node.key, node))
+    def heappush(self, key):
+        heapq.heappush(self.heap, BinaryTreeNode(key))
+        self.insert_from_heap()
 
-    def insert_from_heap(self, heap=None, index=0):
+    def insert_from_heap(self, heap=None, index=0, descending=False):
         if not self.heap:
-            heapq.heapify(heap)
+            if not descending:
+                heapq.heapify(heap)
             self.heap = [BinaryTreeNode(el) for el in heap]
             heap = self.heap
         else:
-            heapq.heapify(self.heap)
+            if not descending:
+                self.heapify()
             heap = self.heap
         return self.node._insert_from_heap(heap, index)
 
@@ -186,11 +198,17 @@ def main():
     tree.bfs_iterative()
     tree.draw_tree("Original Tree")
 
-    node_pop =tree.heappop()
-    print(node_pop.key)
+    tree.heap_sort(descending=True)
+    tree.dfs_iterative()
     tree.draw_tree("Original Tree")
 
-    tree.dfs_iterative()
+    node_pop = tree.heappop()
+    print(node_pop.key)
+    tree.bfs_iterative()
+    tree.draw_tree("Original Tree")
+
+    tree.heappush(35)
+    tree.bfs_iterative()
     tree.draw_tree("Original Tree")
 
 
