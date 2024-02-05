@@ -83,39 +83,42 @@ class LinkedList:
         print()
 
 
-# Приклад використання
+def main():
+    # Створення однозв'язного списку
+    linked_list = LinkedList()
+    node1 = Node(1)
+    node2 = Node(3)
+    node3 = Node(2)
+    linked_list.head = node1
+    node1.next = node2
+    node2.next = node3
 
-# Створення однозв'язного списку
-linked_list = LinkedList()
-node1 = Node(1)
-node2 = Node(3)
-node3 = Node(2)
-linked_list.head = node1
-node1.next = node2
-node2.next = node3
+    # Виведення початкового списку
+    print("Початковий список:")
+    linked_list.display()
 
-# Виведення початкового списку
-print("Початковий список:")
-linked_list.display()
+    # Реверсування списку
+    linked_list.reverse()
+    print("Реверсований список:")
+    linked_list.display()
 
-# Реверсування списку
-linked_list.reverse()
-print("Реверсований список:")
-linked_list.display()
+    # Створення другого однозв'язного списку
+    other_linked_list = LinkedList()
+    other_node1 = Node(5)
+    other_node2 = Node(4)
+    other_linked_list.head = other_node1
+    other_node1.next = other_node2
 
-# Створення другого однозв'язного списку
-other_linked_list = LinkedList()
-other_node1 = Node(5)
-other_node2 = Node(4)
-other_linked_list.head = other_node1
-other_node1.next = other_node2
+    # Об'єднання двох відсортованих списків
+    merged_list = linked_list.merge_sorted(other_linked_list)
+    print("Об'єднаний список:")
+    merged_list.display()
 
-# Об'єднання двох відсортованих списків
-merged_list = linked_list.merge_sorted(other_linked_list)
-print("Об'єднаний список:")
-merged_list.display()
+    # Сортування однозв'язного списку
+    linked_list.insertion_sort()
+    print("Відсортований список:")
+    linked_list.display()
 
-# Сортування однозв'язного списку
-linked_list.insertion_sort()
-print("Відсортований список:")
-linked_list.display()
+
+if __name__ == "__main__":
+    main()
