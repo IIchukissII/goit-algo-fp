@@ -1,11 +1,13 @@
 import heapq
 import uuid
 from collections import deque
+from functools import total_ordering
 
 import matplotlib.pyplot as plt
 import networkx as nx
 
 
+@total_ordering
 class BinaryTreeNode:
     def __init__(self, key=None, color="lightblue"):
         self.key = key
