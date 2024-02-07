@@ -2,7 +2,6 @@ import heapq
 import uuid
 from collections import deque
 from functools import total_ordering
-
 import matplotlib.pyplot as plt
 import networkx as nx
 
@@ -91,7 +90,7 @@ class BinaryTreeNode:
             current_node = stack.pop()
             if current_node not in visited:
                 current_node.color = base_color
-                base_color = tuple(c**lightening_factor for c in base_color)
+                base_color = tuple(c ** lightening_factor for c in base_color)
                 visited.add(current_node)
 
                 if current_node.right:
@@ -108,7 +107,7 @@ class BinaryTreeNode:
             node = queue.popleft()
             if node not in visited:
                 node.color = base_color
-                base_color = tuple(c**lightening_factor for c in base_color)
+                base_color = tuple(c ** lightening_factor for c in base_color)
                 visited.add(node)
 
                 if node.left:
@@ -183,11 +182,11 @@ class HeapTree:
                 labels=labels,
                 with_labels=True,
                 font_size=8,
-                node_size=2500,
+                node_size=1500,
                 node_color=node_colors,
                 font_weight="bold",
             )
-            plt.suptitle(title, x=0.1, y=0.9)  # Set the y parameter to adjust the position of the title
+            plt.suptitle(title, x=0.1, y=0.9, fontsize=16, fontweight="bold", ha="left")  # Set the y parameter to adjust the position of the title
             plt.show()
 
     def dfs_iterative(self, base_color=(0.06, 1.00, 0.70), lightening_factor=0.8):
